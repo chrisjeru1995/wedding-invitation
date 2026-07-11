@@ -1153,13 +1153,13 @@ body { max-width: 100%; overflow-x: hidden; }
 @media (min-width: 641px) {
   /* 1. Invitation text in a soft green rounded panel (readable, no heart) */
   .invite .section__inner {
-    background: rgba(6, 35, 26, 0.72);
+    background: rgba(22, 85, 61, 0.38);
     border: 1px solid rgba(230, 197, 118, 0.3);
     border-radius: 26px;
     max-width: 640px;
     padding: 46px 52px;
-    backdrop-filter: blur(4px);
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(3px);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
     gap: 16px;
   }
   .invite .section::before { display: none; }
