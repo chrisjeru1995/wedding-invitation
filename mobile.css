@@ -9,9 +9,17 @@
 /* ---------- Background: steady (no drift = no shake) ---------- */
 .bg-animate {
   animation: none;
-  height: 100vh;          /* fallback */
-  height: 100lvh;         /* largest viewport height — address bar can't resize it */
-  transform: scale(1.06);
+  /* release the base inset:0 so the height below actually applies and the
+     address bar hiding/showing can't resize (and shake) the background */
+  top: 0;
+  left: 0;
+  right: auto;
+  bottom: auto;
+  width: 100%;
+  height: 100vh;   /* fallback */
+  height: 100lvh;  /* largest viewport height, stable while scrolling */
+  transform: none;
+  will-change: auto;
   background-image: url("assets/forest-bg-mobile.jpg");
 }
 
@@ -45,43 +53,57 @@
 .intro__btn { font-size: clamp(0.78rem, 3.6vw, 0.92rem); padding: 14px 28px; }
 .intro__sprig { width: min(210px, 58vw); }
 
-/* ---------- HERO (page 2) ---------- */
-.hero__content { padding: 24px 22px; }
-.hero__eyebrow { font-size: clamp(0.78rem, 3.8vw, 0.95rem); letter-spacing: 0.26em; margin-bottom: 14px; }
-.hero__lead { font-size: clamp(1rem, 4.6vw, 1.2rem); }
-.hero__names { margin: 6px 0; }
-.hero__names .name { font-size: clamp(2.8rem, 14vw, 4rem); }
-.hero__names .amp { font-size: clamp(1.7rem, 8vw, 2.2rem); }
-.hero__request { font-size: clamp(0.92rem, 4vw, 1.1rem); }
-.hero__date { font-size: clamp(0.82rem, 3.8vw, 0.98rem); letter-spacing: 0.14em; }
-.hero__divider { width: min(220px, 66vw); }
+/* ---------- HERO (page 2): bigger type, content spread across the screen -- */
+.hero { align-items: stretch; }
+.hero__content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: clamp(54px, 10vh, 92px) 22px;
+}
+.hero__eyebrow { font-size: clamp(0.9rem, 4.4vw, 1.1rem); letter-spacing: 0.24em; margin: 0; }
+.hero__lead { font-size: clamp(1.15rem, 5.2vw, 1.5rem); }
+.hero__names { margin: 0; }
+.hero__names .name { font-size: clamp(3.2rem, 17vw, 5rem); }
+.hero__names .amp { font-size: clamp(2rem, 9vw, 2.8rem); }
+.hero__request { font-size: clamp(1.05rem, 4.8vw, 1.3rem); }
+.hero__date { font-size: clamp(0.92rem, 4.4vw, 1.15rem); letter-spacing: 0.14em; }
+.hero__divider { width: min(240px, 70vw); margin: 0 auto; }
 
-/* ---------- INVITATION (page 3): centred, names on one line ---------- */
-.invite__leaf { font-size: 1.6rem; margin-bottom: 6px; }
-.invite__text { font-size: clamp(1.02rem, 4.4vw, 1.18rem); line-height: 1.75; max-width: 92%; }
-.invite__couple { gap: 8px; margin-top: 22px; }
-.invite__name { white-space: nowrap; font-size: min(7.4vw, 2.3rem); }
-.invite__deg { font-size: 0.72rem; }
-.invite__amp { font-size: 1.05rem; }
+/* ---------- INVITATION (page 3): bigger type, content spread to fill ------ */
+.invite .section__inner { flex: 1; justify-content: space-evenly; }
+.invite__leaf { font-size: 2rem; margin: 0; }
+.invite__text { font-size: clamp(1.15rem, 5vw, 1.45rem); line-height: 1.85; max-width: 94%; }
+.invite__couple { gap: 10px; margin: 0; }
+.invite__name { white-space: nowrap; font-size: min(8.4vw, 2.8rem); }
+.invite__deg { font-size: 0.8rem; letter-spacing: 0.22em; }
+.invite__amp { font-size: 1.25rem; }
 
-/* ---------- COUNTDOWN (page 4): vertical stack of compact rows ---------- */
+/* ---------- COUNTDOWN (page 4): circular timers in a 2x2 ---------- */
 .countdown__grid {
-  grid-template-columns: 1fr;
-  gap: 10px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(16px, 5vw, 24px);
   width: 100%;
-  max-width: 250px;
-  margin-top: 24px;
+  max-width: 300px;
+  margin-top: 28px;
 }
 .cd-unit {
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  gap: 14px;
-  padding: 12px 22px;
-  border-radius: 12px;
+  justify-content: center;
+  gap: 2px;
+  padding: 0;
+  border: 2px solid rgba(230, 197, 118, 0.55);
+  background: rgba(6, 35, 26, 0.5);
+  box-shadow: 0 0 22px rgba(0, 0, 0, 0.35), inset 0 0 18px rgba(248, 230, 173, 0.08);
 }
-.cd-num { font-size: clamp(1.7rem, 8vw, 2.2rem); }
-.cd-label { margin-top: 0; font-size: 0.64rem; }
+.cd-num { font-size: clamp(2rem, 10vw, 2.6rem); line-height: 1; }
+.cd-label { margin-top: 4px; font-size: 0.62rem; }
 
 /* ---------- TIMELINE / Moments to Treasure (page 5): tight stacked cards -- */
 .timeline__list { width: 100%; max-width: 420px; gap: 16px; margin-top: 24px; }
@@ -90,16 +112,33 @@
 .timeline__when { font-size: clamp(0.9rem, 4vw, 1.02rem); }
 .timeline__tag { font-size: 0.62rem; }
 
-/* ---------- VENUE (page 6): compact, map fits ---------- */
-.venue__name { font-size: clamp(1.3rem, 6vw, 1.7rem); margin-top: 12px; }
-.venue__address { font-size: clamp(0.95rem, 4.2vw, 1.08rem); margin-top: 6px; }
-.venue__map { margin-top: 16px; aspect-ratio: 4 / 3; width: 100%; max-width: 100%; }
-.btn--map { margin-top: 18px; padding: 15px 28px; font-size: 0.82rem; }
+/* ---------- VENUE ("Where the Magic Happens"): tidy card ---------- */
+.venue .section__inner {
+  background: rgba(6, 35, 26, 0.55);
+  border: 1px solid rgba(230, 197, 118, 0.32);
+  border-radius: 22px;
+  padding: 26px 20px 30px;
+  backdrop-filter: blur(4px);
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.45);
+  gap: 12px;
+}
+.venue .section__title { font-size: clamp(1.7rem, 7.2vw, 2.2rem); }
+.venue__name { font-size: clamp(1.35rem, 6vw, 1.7rem); margin-top: 8px; color: var(--gold-bright); }
+.venue__address { font-size: clamp(0.95rem, 4.2vw, 1.08rem); margin-top: 4px; }
+.venue__map { margin-top: 16px; aspect-ratio: 4 / 3; width: 100%; border-radius: 14px; }
+.btn--map { margin-top: 20px; padding: 15px 30px; font-size: 0.84rem; }
 
-/* ---------- CLOSING (last page): compact, centred ---------- */
+/* ---------- CLOSING (last page): highlighted, larger names ---------- */
 .closing__script { font-size: clamp(2rem, 9vw, 3rem); }
-.closing__names { font-size: clamp(1.4rem, 6.5vw, 1.9rem); margin-top: 6px; }
-.closing__note { font-size: clamp(0.95rem, 4.2vw, 1.08rem); margin-top: 10px; max-width: 92%; }
+.closing__names {
+  font-family: var(--font-script);
+  font-size: clamp(2.6rem, 13vw, 3.8rem);
+  line-height: 1.15;
+  color: var(--gold-bright);
+  margin-top: 12px;
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.6), 0 0 34px rgba(248, 230, 173, 0.55);
+}
+.closing__note { font-size: clamp(1rem, 4.4vw, 1.15rem); margin-top: 16px; max-width: 92%; }
 
 /* ---------- Footer ---------- */
 .footer { font-size: 0.68rem; padding: 22px 16px calc(30px + env(safe-area-inset-bottom)); }
