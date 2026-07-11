@@ -8,6 +8,31 @@
     "(prefers-reduced-motion: reduce)"
   ).matches;
 
+  /* ---------- Responsive scaling: size content to the device screen ----------
+     Everything typographic is built on rem, so setting the root font-size from
+     the viewport scales all content proportionally to each device. */
+  function setResponsiveScale() {
+    const vw = window.innerWidth;
+    const vh = window.innerHeight;
+    let fs;
+
+    if (vw <= 640) {
+      // Phones: scale with the screen. Use width, but also cap by height so a
+      // full-screen section never overflows on short/landscape phones.
+      fs = Math.min(vw / 21, vh / 40, 26);
+      fs = Math.max(fs, 17); // never smaller than comfortable reading size
+    } else if (vw <= 1024) {
+      // Tablets
+      fs = Math.min(Math.max(vw / 46, 18), 22);
+    } else {
+      // Desktop / large screens
+      fs = Math.min(Math.max(vw / 90, 17), 20);
+    }
+
+    document.documentElement.style.fontSize = fs.toFixed(2) + "px";
+  }
+  setResponsiveScale();
+
   /* ---------- 0. Tap to open ---------- */
   const intro = document.getElementById("intro");
   const openBtn = document.getElementById("open-btn");
@@ -192,8 +217,14 @@
 
   /* ---------- 4. Resize handling ---------- */
   let resizeTimer;
+  function onResize() {
+    setResponsiveScale();
+    initFireflies();
+  }
   window.addEventListener("resize", () => {
+    setResponsiveScale(); // instant, so text reflows smoothly
     clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(initFireflies, 200);
+    resizeTimer = setTimeout(onResize, 200);
   });
+  window.addEventListener("orientationchange", setResponsiveScale);
 })();
