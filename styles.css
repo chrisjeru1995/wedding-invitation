@@ -1227,36 +1227,59 @@ body { max-width: 100%; overflow-x: hidden; }
    Mobile layout: content spans the full screen height
    =============================== */
 @media (max-width: 640px) {
-  /* let the inner content stretch and distribute across the whole panel */
-  .section { align-items: stretch; justify-content: stretch; }
+  /* stop the background from shaking: no drift + fixed to largest viewport
+     so the address bar hiding/showing can't resize it */
+  .bg-animate { animation: none; height: 100lvh; transform: scale(1.06); }
+
+  /* center content vertically with tidy, compact spacing */
+  .section { align-items: center; justify-content: center; }
   .section__inner {
-    flex: 1 1 auto;
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
+    justify-content: center;
     align-items: center;
-    gap: clamp(16px, 3vh, 34px);
+    gap: clamp(12px, 2vh, 20px);
     max-width: 560px;
   }
 
-  /* countdown stacks into a bigger 2x2 block on phones */
+  /* Page 3 (invitation): keep both names on a single line, width-based so
+     they can never overflow the screen */
+  .invite__name { white-space: nowrap; font-size: min(7vw, 2.4rem); }
+  .invite__couple { gap: 6px; }
+  .invite__text { margin: 0 auto; }
+
+  /* Countdown: vertical single-column stack, compact rows */
   .countdown__grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
+    grid-template-columns: 1fr;
+    gap: 10px;
     width: 100%;
-    max-width: 340px;
+    max-width: 240px;
+    margin-top: 22px;
   }
-  .cd-unit { padding: 26px 8px; }
-  .cd-num { font-size: clamp(2.4rem, 12vw, 3.4rem); }
+  .cd-unit {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 12px;
+    padding: 14px 16px;
+  }
+  .cd-num { font-size: clamp(1.9rem, 9vw, 2.5rem); }
+  .cd-label { margin-top: 0; }
 
-  /* timeline cards spread to fill the panel */
-  .timeline__list { width: 100%; }
+  /* Moments to Treasure: tighter spacing between cards */
+  .timeline__list { width: 100%; gap: 16px; margin-top: 22px; }
+  .timeline__body { padding: 24px 22px; }
 
-  /* keep the hero centered (it reads better than spread out) */
+  /* Venue: tighter spacing between the lines/map/button */
+  .venue__name { margin-top: 12px; }
+  .venue__address { margin-top: 6px; }
+  .venue__map { margin-top: 18px; }
+  .btn--map { margin-top: 18px; }
+
+  /* Last page (closing): compact + centered */
+  .closing__names { margin-top: 6px; }
+  .closing__note { margin-top: 10px; }
+
+  /* hero unaffected */
   .hero__content { display: block; }
-}
-
-/* Very tall phones: give a little more air between spread items */
-@media (max-width: 640px) and (min-height: 780px) {
-  .section__inner { gap: clamp(24px, 5vh, 56px); }
 }
