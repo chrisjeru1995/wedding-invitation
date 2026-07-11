@@ -1197,3 +1197,24 @@ body { max-width: 100%; overflow-x: hidden; }
   .invite__name { font-size: 2.3rem; }
   .section__title, .timeline__title { font-size: 1.95rem; }
 }
+
+/* ===============================
+   Consistent UX: every section is a full-height panel with
+   vertically-centered content — same on desktop and mobile
+   =============================== */
+.section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;   /* fallback */
+  min-height: 100svh;
+}
+.section__inner { width: 100%; }
+
+/* give a touch more breathing room on phones so content fills the panel */
+@media (max-width: 640px) {
+  .section { padding-top: clamp(56px, 12vw, 90px); padding-bottom: clamp(56px, 12vw, 90px); }
+  .countdown__grid { margin-top: 34px; }
+  .timeline__list { margin-top: 40px; gap: 26px; }
+}
