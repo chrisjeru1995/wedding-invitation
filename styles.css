@@ -1194,7 +1194,9 @@ body { max-width: 100%; overflow-x: hidden; }
   /* 3. Venue name + address inside a green rectangle box */
   .venue__card {
     display: inline-block;
-    background: rgba(6, 35, 26, 0.82);
+    background:
+      radial-gradient(ellipse at 50% 0%, rgba(248, 230, 173, 0.12), transparent 60%),
+      rgba(6, 35, 26, 0.55);
     border: 1px solid rgba(230, 197, 118, 0.45);
     border-radius: 14px;
     padding: 22px 34px;
