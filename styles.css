@@ -30,17 +30,12 @@ body {
 /* ---------- Moving forest background ---------- */
 .bg-animate {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;      /* fallback */
-  height: 100lvh;     /* largest viewport height — immune to toolbar show/hide */
+  inset: -6%;
   z-index: -3;
   background: #04140e url("assets/forest-bg.jpg") center center / cover no-repeat;
-  transform: scale(1.06);
+  transform: scale(1.04);
   transform-origin: center center;
   will-change: transform;
-  backface-visibility: hidden;
   animation: bgDrift 34s ease-in-out infinite alternate;
 }
 /* portrait forest image on phones */
@@ -48,8 +43,8 @@ body {
   .bg-animate { background-image: url("assets/forest-bg-mobile.jpg"); }
 }
 @keyframes bgDrift {
-  0%   { transform: scale(1.06); }
-  100% { transform: scale(1.14); }
+  0%   { transform: scale(1.04); }
+  100% { transform: scale(1.12); }
 }
 /* readability scrim over the moving photo */
 .bg-scrim {
@@ -1133,4 +1128,72 @@ body {
 /* Prefer plain background on very small / low-power devices to avoid jank */
 @media (max-width: 640px) and (prefers-reduced-motion: reduce) {
   .bg-animate { animation: none; transform: scale(1.02); }
+}
+
+/* ===============================
+   Responsive typography for phones
+   (fluid clamps scale with each screen width; prevent zoom-out overflow)
+   =============================== */
+html { max-width: 100%; }
+body { max-width: 100%; overflow-x: hidden; }
+* { min-width: 0; }
+
+/* let long names wrap instead of forcing the page wider */
+.hero__names .name,
+.invite__name,
+.closing__names,
+.venue__name,
+.timeline__title {
+  overflow-wrap: break-word;
+  word-break: normal;
+}
+
+@media (max-width: 640px) {
+  /* Intro scroll */
+  .intro__eyebrow { font-size: clamp(0.72rem, 3.4vw, 0.9rem); }
+  .intro__monogram { font-size: clamp(3.6rem, 20vw, 5rem); }
+  .intro__btn { font-size: clamp(0.8rem, 3.6vw, 0.95rem); }
+
+  /* Hero */
+  .hero__eyebrow  { font-size: clamp(0.82rem, 4vw, 1rem); letter-spacing: 0.3em; }
+  .hero__lead     { font-size: clamp(1.05rem, 4.8vw, 1.3rem); }
+  .hero__names .name { font-size: clamp(3rem, 15vw, 4.6rem); }
+  .hero__names .amp  { font-size: clamp(1.8rem, 8vw, 2.4rem); }
+  .hero__request  { font-size: clamp(0.95rem, 4.2vw, 1.15rem); }
+  .hero__date     { font-size: clamp(0.85rem, 4vw, 1rem); }
+
+  /* Section headings */
+  .section__title { font-size: clamp(2rem, 8.5vw, 2.6rem); }
+  .section__sub   { font-size: clamp(0.82rem, 3.6vw, 0.95rem); }
+
+  /* Invitation */
+  .invite__text { font-size: clamp(1.1rem, 4.8vw, 1.3rem); }
+  .invite__name { font-size: clamp(2.4rem, 12vw, 3.4rem); }
+  .invite__deg  { font-size: clamp(0.78rem, 3.4vw, 0.9rem); }
+  .invite__amp  { font-size: clamp(1.1rem, 5vw, 1.4rem); }
+
+  /* Countdown */
+  .cd-num   { font-size: clamp(1.9rem, 9.5vw, 2.6rem); }
+  .cd-label { font-size: clamp(0.62rem, 2.9vw, 0.72rem); letter-spacing: 0.12em; }
+
+  /* Timeline */
+  .timeline__title { font-size: clamp(2rem, 9vw, 2.6rem); }
+  .timeline__when  { font-size: clamp(0.92rem, 4vw, 1.05rem); }
+  .timeline__tag   { font-size: clamp(0.62rem, 2.9vw, 0.7rem); }
+
+  /* Venue */
+  .venue__name    { font-size: clamp(1.35rem, 6vw, 1.8rem); }
+  .venue__address { font-size: clamp(0.95rem, 4.2vw, 1.1rem); }
+
+  /* Closing */
+  .closing__script { font-size: clamp(2.1rem, 10vw, 3.2rem); }
+  .closing__names  { font-size: clamp(1.4rem, 6.5vw, 2rem); }
+  .closing__note   { font-size: clamp(0.95rem, 4.2vw, 1.1rem); }
+}
+
+/* Extra bump for very small phones */
+@media (max-width: 360px) {
+  .hero__names .name { font-size: 2.9rem; }
+  .invite__name { font-size: 2.3rem; }
+  .section__title, .timeline__title { font-size: 1.95rem; }
 }
