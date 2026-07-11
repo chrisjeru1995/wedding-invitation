@@ -32,11 +32,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
-    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Great+Vibes&family=Josefin+Sans:wght@300;400;600&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Great+Vibes&family=Josefin+Sans:wght@300;400;600&display=swap"
     rel="stylesheet"
   />
-  <link rel="stylesheet" href="styles.css?v=7" />
-  <link rel="stylesheet" href="mobile.css?v=7" media="screen and (max-width: 640px)" />
+  <link rel="stylesheet" href="styles.css?v=8" />
+  <link rel="stylesheet" href="mobile.css?v=8" media="screen and (max-width: 640px)" />
 </head>
 <body class="is-locked">
   <!-- Moving forest background (Ken Burns drift) -->
@@ -48,6 +48,15 @@
 
   <!-- Floating aesthetic hearts -->
   <div class="hearts" id="hearts" aria-hidden="true"></div>
+
+  <!-- Heart clip-path used by the desktop invitation & countdown panels -->
+  <svg width="0" height="0" aria-hidden="true" style="position:absolute">
+    <defs>
+      <clipPath id="heart-clip" clipPathUnits="objectBoundingBox">
+        <path d="M0.5,1 C0.5,1 0.02,0.66 0.02,0.31 C0.02,0.12 0.18,0.02 0.32,0.02 C0.42,0.02 0.5,0.11 0.5,0.2 C0.5,0.11 0.58,0.02 0.68,0.02 C0.82,0.02 0.98,0.12 0.98,0.31 C0.98,0.66 0.5,1 0.5,1 Z" />
+      </clipPath>
+    </defs>
+  </svg>
 
   <!-- ===== TAP TO OPEN intro ===== -->
   <div class="intro" id="intro">
@@ -198,11 +207,13 @@
     <section class="section venue" id="venue">
       <div class="section__inner">
         <h2 class="section__title reveal">Where the Magic Happens</h2>
-        <p class="venue__name reveal">Master Printers Association Marriage Hall</p>
-        <p class="venue__address reveal">
-          Kamarajar Salai, Railway Feeder Road,<br />
-          Sivakasi.
-        </p>
+        <div class="venue__card reveal">
+          <p class="venue__name">Master Printers Association Marriage Hall</p>
+          <p class="venue__address">
+            Kamarajar Salai, Railway Feeder Road,<br />
+            Sivakasi.
+          </p>
+        </div>
 
         <div class="venue__map reveal">
           <iframe
@@ -238,6 +249,6 @@
     <p>Sivakasi · 17.09.2026</p>
   </footer>
 
-  <script src="script.js?v=7"></script>
+  <script src="script.js?v=8"></script>
 </body>
 </html>
