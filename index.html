@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#0b2b22" />
+  <title>Vishnu Prasad &amp; Karthikadevi — Wedding Invitation</title>
+  <meta name="description" content="Come wander into our happily ever after — the wedding of Vishnu Prasad & Karthikadevi, 17th September 2026, Sivakasi." />
+
+  <!-- Mobile web app -->
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="V & K" />
+  <meta name="format-detection" content="telephone=no" />
+
+  <!-- Social share preview (WhatsApp / Facebook / Twitter).
+       After hosting, replace the og:url and og:image with your full GitHub Pages URL,
+       e.g. https://<username>.github.io/<repo>/assets/forest-bg.jpg -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Vishnu Prasad & Karthikadevi — Wedding Invitation" />
+  <meta property="og:description" content="Come wander into our happily ever after — 17th September 2026, Sivakasi." />
+  <meta property="og:image" content="assets/forest-bg.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Vishnu Prasad & Karthikadevi — Wedding Invitation" />
+  <meta name="twitter:description" content="Come wander into our happily ever after — 17th September 2026, Sivakasi." />
+  <meta name="twitter:image" content="assets/forest-bg.jpg" />
+
+  <!-- Emoji favicon (no extra file needed) -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌿</text></svg>" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Great+Vibes&family=Josefin+Sans:wght@300;400;600&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="is-locked">
+  <!-- Moving forest background (Ken Burns drift) -->
+  <div class="bg-animate" aria-hidden="true"></div>
+  <div class="bg-scrim" aria-hidden="true"></div>
+
+  <!-- Ambient drifting fireflies -->
+  <canvas id="firefly-canvas" aria-hidden="true"></canvas>
+
+  <!-- Floating aesthetic hearts -->
+  <div class="hearts" id="hearts" aria-hidden="true"></div>
+
+  <!-- ===== TAP TO OPEN intro ===== -->
+  <div class="intro" id="intro">
+    <div class="intro__card">
+      <span class="intro__corner tl" aria-hidden="true">❧</span>
+      <span class="intro__corner tr" aria-hidden="true">❧</span>
+      <span class="intro__corner bl" aria-hidden="true">❧</span>
+      <span class="intro__corner br" aria-hidden="true">❧</span>
+
+      <svg class="intro__sprig intro__sprig--top" viewBox="0 0 260 56" aria-hidden="true">
+        <g fill="none" stroke="#d9b25f" stroke-width="2" stroke-linecap="round">
+          <path d="M112 30 C 90 28 74 16 52 22 C 38 26 34 36 24 30" />
+          <path d="M24 30 C 19 27 17 34 23 35" />
+          <path d="M148 30 C 170 28 186 16 208 22 C 222 26 226 36 236 30" />
+          <path d="M236 30 C 241 27 243 34 237 35" />
+        </g>
+        <g fill="#e6c07a">
+          <circle cx="72" cy="18" r="2.2" />
+          <circle cx="188" cy="18" r="2.2" />
+          <circle cx="50" cy="25" r="1.5" />
+          <circle cx="210" cy="25" r="1.5" />
+        </g>
+        <path class="intro__heart-shape"
+          d="M130 46 C 119 35 107 31 107 20 C 107 13 112 10 117 10 C 122 10 127 14 130 19 C 133 14 138 10 143 10 C 148 10 153 13 153 20 C 153 31 141 35 130 46 Z"
+          fill="#f5dc93" stroke="#d9b25f" stroke-width="1.5" />
+      </svg>
+
+      <p class="intro__eyebrow">Once upon a forest</p>
+      <div class="intro__monogram">V <span>&amp;</span> K</div>
+      <button class="intro__btn" id="open-btn" type="button">
+        <span class="intro__btn-ring"></span>
+        Unfold Our Story
+      </button>
+
+      <svg class="intro__sprig intro__sprig--bottom" viewBox="0 0 260 56" aria-hidden="true">
+        <g fill="none" stroke="#d9b25f" stroke-width="2" stroke-linecap="round">
+          <path d="M112 30 C 90 28 74 16 52 22 C 38 26 34 36 24 30" />
+          <path d="M24 30 C 19 27 17 34 23 35" />
+          <path d="M148 30 C 170 28 186 16 208 22 C 222 26 226 36 236 30" />
+          <path d="M236 30 C 241 27 243 34 237 35" />
+        </g>
+        <g fill="#e6c07a">
+          <circle cx="72" cy="18" r="2.2" />
+          <circle cx="188" cy="18" r="2.2" />
+          <circle cx="50" cy="25" r="1.5" />
+          <circle cx="210" cy="25" r="1.5" />
+        </g>
+        <path class="intro__heart-shape"
+          d="M130 46 C 119 35 107 31 107 20 C 107 13 112 10 117 10 C 122 10 127 14 130 19 C 133 14 138 10 143 10 C 148 10 153 13 153 20 C 153 31 141 35 130 46 Z"
+          fill="#f5dc93" stroke="#d9b25f" stroke-width="1.5" />
+      </svg>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <header class="hero" id="top">
+    <div class="hero__overlay" aria-hidden="true"></div>
+
+    <div class="hero__content">
+      <p class="hero__eyebrow reveal">Where two hearts wander home</p>
+      <p class="hero__lead reveal">Beneath the whispering trees, two souls found forever</p>
+      <h1 class="hero__names reveal">
+        <span class="name">Vishnu Prasad</span>
+        <span class="amp">&amp;</span>
+        <span class="name">Karthikadevi</span>
+      </h1>
+      <div class="hero__divider reveal" aria-hidden="true">
+        <span class="leaf-mark">❧</span>
+      </div>
+      <p class="hero__request reveal">Come wander into our happily ever after</p>
+      <p class="hero__date reveal">Thursday · 17<sup>th</sup> September 2026</p>
+      <a href="#invitation" class="scroll-cue reveal" aria-label="Scroll down">
+        <span></span>
+      </a>
+    </div>
+  </header>
+
+  <main>
+    <!-- INVITATION -->
+    <section class="section invite" id="invitation">
+      <div class="section__inner">
+        <div class="invite__leaf reveal" aria-hidden="true">❧</div>
+        <p class="invite__text reveal">
+          Some love stories begin with a spark, ours began quietly and grew into
+          forever. With hearts full of wonder, we invite you to walk into the woods
+          with us and share the day two paths become one.
+        </p>
+
+        <div class="invite__couple reveal">
+          <div class="invite__person">
+            <span class="invite__name">M. J. Vishnu Prasad</span>
+            <span class="invite__deg">B.E., M.B.A.</span>
+          </div>
+
+          <div class="invite__amp" aria-hidden="true">with</div>
+
+          <div class="invite__person">
+            <span class="invite__name">M. Karthikadevi</span>
+            <span class="invite__deg">M.Tech.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- COUNTDOWN -->
+    <section class="section countdown" id="countdown">
+      <div class="section__inner">
+        <h2 class="section__title reveal">Counting Down to Forever</h2>
+        <p class="section__sub reveal">Every moment closer to always</p>
+
+        <div class="countdown__grid reveal" id="countdown-timer" role="timer" aria-live="polite">
+          <div class="cd-unit"><span class="cd-num" id="cd-days">00</span><span class="cd-label">Days</span></div>
+          <div class="cd-unit"><span class="cd-num" id="cd-hours">00</span><span class="cd-label">Hours</span></div>
+          <div class="cd-unit"><span class="cd-num" id="cd-mins">00</span><span class="cd-label">Minutes</span></div>
+          <div class="cd-unit"><span class="cd-num" id="cd-secs">00</span><span class="cd-label">Seconds</span></div>
+        </div>
+        <p class="countdown__done reveal" id="countdown-done" hidden>Today is the day. 🌿</p>
+      </div>
+    </section>
+
+    <!-- PROGRAM TIMELINE -->
+    <section class="section timeline" id="events">
+      <div class="section__inner">
+        <h2 class="section__title reveal">Moments to Treasure</h2>
+
+        <ol class="timeline__list">
+          <li class="timeline__item reveal">
+            <span class="timeline__dot" aria-hidden="true"></span>
+            <div class="timeline__body">
+              <span class="timeline__tag">A Promise of Forever</span>
+              <h3 class="timeline__title">Where We Say Yes</h3>
+              <p class="timeline__when">Wednesday, 16<sup>th</sup> September 2026 · 7:00 p.m. onwards</p>
+            </div>
+          </li>
+          <li class="timeline__item reveal">
+            <span class="timeline__dot" aria-hidden="true"></span>
+            <div class="timeline__body">
+              <span class="timeline__tag">Two Hearts, One Path</span>
+              <h3 class="timeline__title">The Vows Beneath the Trees</h3>
+              <p class="timeline__when">Thursday, 17<sup>th</sup> September 2026 · 10:35 a.m. – 11:35 a.m.</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- VENUE -->
+    <section class="section venue" id="venue">
+      <div class="section__inner">
+        <h2 class="section__title reveal">Where the Magic Happens</h2>
+        <p class="venue__name reveal">Master Printers Association Marriage Hall</p>
+        <p class="venue__address reveal">
+          Kamarajar Salai, Railway Feeder Road,<br />
+          Sivakasi.
+        </p>
+
+        <div class="venue__map reveal">
+          <iframe
+            title="Map to Master Printers Association Marriage Hall, Sivakasi"
+            src="https://www.google.com/maps?q=Master+Printers+Association+Marriage+Hall,+Kamarajar+Salai,+Railway+Feeder+Road,+Sivakasi&output=embed"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          ></iframe>
+        </div>
+
+        <a
+          class="btn btn--map reveal"
+          href="https://www.google.com/maps/dir/?api=1&destination=Master+Printers+Association+Marriage+Hall,+Kamarajar+Salai,+Railway+Feeder+Road,+Sivakasi"
+          target="_blank"
+          rel="noopener"
+        >
+          🧭 View on Google Maps
+        </a>
+      </div>
+    </section>
+
+    <!-- CLOSING -->
+    <section class="section closing">
+      <div class="section__inner">
+        <p class="closing__script reveal">And so, our forever begins</p>
+        <p class="closing__names reveal">Vishnu Prasad &amp; Karthikadevi</p>
+        <p class="closing__note reveal">Your love and laughter are the truest blessings we could wish for. Come, let’s begin this enchanted journey together 🌿✨</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>Sivakasi · 17.09.2026</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
