@@ -1222,3 +1222,41 @@ body { max-width: 100%; overflow-x: hidden; }
   .countdown__grid { margin-top: 34px; }
   .timeline__list { margin-top: 40px; gap: 26px; }
 }
+
+/* ===============================
+   Mobile layout: content spans the full screen height
+   =============================== */
+@media (max-width: 640px) {
+  /* let the inner content stretch and distribute across the whole panel */
+  .section { align-items: stretch; justify-content: stretch; }
+  .section__inner {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    gap: clamp(16px, 3vh, 34px);
+    max-width: 560px;
+  }
+
+  /* countdown stacks into a bigger 2x2 block on phones */
+  .countdown__grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    width: 100%;
+    max-width: 340px;
+  }
+  .cd-unit { padding: 26px 8px; }
+  .cd-num { font-size: clamp(2.4rem, 12vw, 3.4rem); }
+
+  /* timeline cards spread to fill the panel */
+  .timeline__list { width: 100%; }
+
+  /* keep the hero centered (it reads better than spread out) */
+  .hero__content { display: block; }
+}
+
+/* Very tall phones: give a little more air between spread items */
+@media (max-width: 640px) and (min-height: 780px) {
+  .section__inner { gap: clamp(24px, 5vh, 56px); }
+}
