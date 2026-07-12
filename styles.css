@@ -1260,3 +1260,32 @@ body { max-width: 100%; overflow-x: hidden; }
   font-size: clamp(1.1rem, 2.2vw, 1.35rem);
   line-height: 1.7;
 }
+
+/* ===============================
+   Timeline hierarchy: event name + date are the focus; poetic title small
+   =============================== */
+.timeline__tag {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  color: var(--gold-bright);
+  font-family: var(--font-serif);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: clamp(1.6rem, 4vw, 2.3rem);
+  padding: 0;
+  margin-bottom: 10px;
+}
+.timeline__title {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(1rem, 2.2vw, 1.3rem);
+  opacity: 0.82;
+  margin-bottom: 4px;
+  text-shadow: none;
+}
+.tl-date { font-size: clamp(1.25rem, 2.7vw, 1.6rem); font-weight: 700; }
+.tl-day { font-size: 0.82rem; }
+.tl-time { font-size: 0.98rem; }

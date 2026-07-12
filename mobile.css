@@ -108,9 +108,9 @@
 /* ---------- TIMELINE / Moments to Treasure (page 5): tight stacked cards -- */
 .timeline__list { width: 100%; max-width: 420px; gap: 16px; margin-top: 24px; }
 .timeline__body { padding: 22px 20px; }
-.timeline__title { font-size: clamp(1.8rem, 8vw, 2.4rem); }
-.timeline__when { font-size: clamp(0.9rem, 4vw, 1.02rem); }
-.timeline__tag { font-size: 0.62rem; }
+.timeline__tag { font-size: clamp(1.6rem, 7vw, 2.1rem); }
+.timeline__title { font-size: clamp(1rem, 4.2vw, 1.25rem); }
+.tl-date { font-size: clamp(1.2rem, 5.4vw, 1.55rem); }
 
 /* ---------- VENUE ("Where the Magic Happens"): tidy card ---------- */
 .venue .section__inner {
