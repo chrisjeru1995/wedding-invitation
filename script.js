@@ -145,7 +145,8 @@
     if (!ffCanvas || prefersReduced) return;
     sizeCanvas(ffCanvas);
     fireflies = [];
-    for (let i = 0; i < 44; i++) fireflies.push(makeFirefly(window.innerWidth, window.innerHeight));
+    const count = window.innerWidth < 640 ? 28 : 44;
+    for (let i = 0; i < count; i++) fireflies.push(makeFirefly(window.innerWidth, window.innerHeight));
     if (!ffRunning) { ffRunning = true; requestAnimationFrame(drawFireflies); }
   }
   function drawFireflies() {
@@ -228,22 +229,15 @@
     }
   }
 
-  if (isMobile()) {
-    buildMobileAmbient();
-    window.addEventListener("load", buildMobileAmbient);
-    setTimeout(buildMobileAmbient, 900);
-  } else {
-    initFireflies();
-    buildDesktopHearts();
-  }
+  // Fixed, GPU-composited canvas + hearts work on every screen for both
+  // desktop and mobile now, so use the same ambient everywhere.
+  initFireflies();
+  buildDesktopHearts();
 
   /* ---------- 4. Resize handling ---------- */
   let resizeTimer;
   window.addEventListener("resize", () => {
     clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(() => {
-      if (isMobile()) buildMobileAmbient();
-      else initFireflies();
-    }, 250);
+    resizeTimer = setTimeout(initFireflies, 250);
   });
 })();

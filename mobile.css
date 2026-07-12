@@ -6,94 +6,59 @@
    vertically-centred panel that fills the screen but never clips content.
    ========================================================================== */
 
-/* ---------- Background: steady (no drift = no shake) ---------- */
-/* ---------- THE REAL FIX: no position:fixed on mobile ----------
-   On this device's GPU, fixed-position elements jitter/vibrate on their own
-   (that's why the intro shook with no scrolling). So on mobile we remove the
-   fixed background + scrim entirely and paint the forest as a normal, scrolling
-   background on each full-screen panel. The intro is made non-fixed too
-   (scrolling is locked while it's shown). No fixed layer = no shake. */
-/* ONE continuous forest background that scrolls WITH the page.
-   It's position:absolute (NOT fixed → no shake) and as tall as the whole
-   document (height set by JS). Sections stay transparent so it shows through,
-   just like desktop — but it scrolls with the content instead of being pinned. */
+/* ==========================================================================
+   BACKGROUND (mobile) — the reliable recipe:
+     • position: fixed div  → GPU keeps DOM elements pinned effortlessly
+     • height: 100svh       → locked to the SMALL viewport, so it never resizes
+                              when the address bar shows/hides (no jump)
+     • translateZ(0)        → forces GPU compositing = 60fps smooth, no shake
+   Sections stay transparent so this shows through (exactly like desktop), and
+   because it's fixed it naturally covers EVERY screen. NO background-attachment.
+   ========================================================================== */
 .bg-animate {
   display: block !important;
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  min-height: 100vh;
-  background: #04140e url("assets/forest-bg-mobile.jpg") center top / cover no-repeat;
+  height: 100svh;
+  background: #04140e url("assets/forest-bg-mobile.jpg") center center / cover no-repeat;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  will-change: transform;
   animation: none !important;
-  transform: none !important;
-  -webkit-transform: none !important;
-  will-change: auto !important;
 }
 .bg-scrim {
   display: block !important;
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  min-height: 100vh;
+  height: 100svh;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
 }
-/* intro just gets a dark veil for card contrast; the forest shows from .bg-animate */
-.intro {
-  position: absolute;
-  background: linear-gradient(rgba(4, 20, 14, 0.45), rgba(4, 20, 14, 0.72));
+/* fireflies canvas + hearts: fixed + GPU-composited, so the animation shows on
+   every screen without shaking */
+#firefly-canvas {
+  display: block !important;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100svh;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
 }
-
-/* mobile uses CSS fireflies/hearts (below), not the canvas */
-#firefly-canvas { display: none !important; }
-
-/* hearts host spans the whole page (height set by JS), scrolls with content.
-   Raised above the now-opaque section backgrounds so the ambience shows. */
 .hearts {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  overflow: visible;
-  z-index: 5;
-}
-
-/* CSS fireflies scattered across every screen.
-   NB: use `.hearts .ff-dot` so it out-specifies the base `.hearts span` rule
-   (otherwise the base rising-heart animation/position overrides these). */
-.hearts .ff-dot {
-  position: absolute;
-  bottom: auto;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(248, 230, 160, 0.95), rgba(248, 230, 160, 0) 70%);
-  color: transparent;
-  pointer-events: none;
-  opacity: 0.15;
-  animation-name: ffTwinkle;
-  animation-timing-function: ease-in-out;
-  animation-iteration-count: infinite;
-}
-@keyframes ffTwinkle {
-  0%, 100% { opacity: 0.12; transform: translate(0, 0) scale(0.9); }
-  50%      { opacity: 0.9;  transform: translate(5px, -7px) scale(1.2); }
-}
-
-/* CSS hearts gently bobbing across every screen */
-.hearts .heart-bob {
-  position: absolute;
-  bottom: auto;
-  color: rgba(248, 214, 190, 0.7);
-  text-shadow: 0 0 12px rgba(248, 230, 173, 0.6);
-  pointer-events: none;
-  animation-name: heartBob;
-  animation-timing-function: ease-in-out;
-  animation-iteration-count: infinite;
-}
-@keyframes heartBob {
-  0%, 100% { transform: translateY(0); opacity: 0.3; }
-  50%      { transform: translateY(-14px); opacity: 0.72; }
+  height: 100svh;
+  overflow: hidden;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
 }
 
 /* remove backdrop blur on mobile (perf) — panels keep their green tint */
