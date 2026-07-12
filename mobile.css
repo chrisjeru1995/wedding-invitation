@@ -44,11 +44,17 @@
   z-index: 5;
 }
 
-/* CSS fireflies scattered across every screen */
-.ff-dot {
+/* CSS fireflies scattered across every screen.
+   NB: use `.hearts .ff-dot` so it out-specifies the base `.hearts span` rule
+   (otherwise the base rising-heart animation/position overrides these). */
+.hearts .ff-dot {
   position: absolute;
+  bottom: auto;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
   background: radial-gradient(circle, rgba(248, 230, 160, 0.95), rgba(248, 230, 160, 0) 70%);
+  color: transparent;
   pointer-events: none;
   opacity: 0.15;
   animation-name: ffTwinkle;
@@ -61,11 +67,11 @@
 }
 
 /* CSS hearts gently bobbing across every screen */
-.heart-bob {
+.hearts .heart-bob {
   position: absolute;
   bottom: auto;
-  color: rgba(248, 214, 190, 0.6);
-  text-shadow: 0 0 12px rgba(248, 230, 173, 0.5);
+  color: rgba(248, 214, 190, 0.7);
+  text-shadow: 0 0 12px rgba(248, 230, 173, 0.6);
   pointer-events: none;
   animation-name: heartBob;
   animation-timing-function: ease-in-out;
@@ -75,16 +81,6 @@
   0%, 100% { transform: translateY(0); opacity: 0.3; }
   50%      { transform: translateY(-14px); opacity: 0.72; }
 }
-
-/* Per-screen background alignment: progress down the forest as you scroll,
-   so the scene feels continuous instead of resetting on each panel. */
-.intro    { background-position: center 18%; }
-.hero     { background-position: center 10%; }
-.invite   { background-position: center 30%; }
-.countdown{ background-position: center 46%; }
-.timeline { background-position: center 60%; }
-.venue    { background-position: center 76%; }
-.closing  { background-position: center 94%; }
 
 /* remove backdrop blur on mobile (perf) — panels keep their green tint */
 .intro__card,
