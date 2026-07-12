@@ -195,3 +195,21 @@
 
 /* ---------- Footer ---------- */
 .footer { font-size: 0.68rem; padding: 22px 16px calc(30px + env(safe-area-inset-bottom)); }
+
+/* ==========================================================================
+   TRUE static background on mobile (the real fix)
+   The reason a fixed background "moves/shakes" on mobile is the address bar
+   hiding/showing as the PAGE scrolls, which shifts fixed layers. So we stop the
+   page (html) from scrolling and let the CONTENT scroll inside <body> instead.
+   The address bar never toggles → the fixed background is perfectly static,
+   just like desktop, and only the content moves.
+   ========================================================================== */
+html {
+  height: 100%;
+  overflow: hidden;               /* the page itself never scrolls */
+}
+body {
+  height: 100%;
+  overflow-y: auto;               /* content scrolls in here instead */
+  -webkit-overflow-scrolling: touch;
+}
