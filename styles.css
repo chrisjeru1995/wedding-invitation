@@ -1214,3 +1214,49 @@ body { max-width: 100%; overflow-x: hidden; }
   }
 
 }
+
+/* ===============================
+   Content-update tweaks (fonts, timeline date focus, closing note)
+   =============================== */
+/* Couple names in an elegant serif so the "M." initials read as capitals */
+.invite__name {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+/* Timeline: date first (emphasised), then day, then time */
+.timeline__when {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  margin-top: 8px;
+}
+.tl-date {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: 1.35rem;
+  line-height: 1.1;
+  color: var(--gold-bright);
+  letter-spacing: 0.01em;
+}
+.tl-date sup { font-size: 0.6em; }
+.tl-day {
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--moss-light);
+}
+.tl-time {
+  font-family: var(--font-sans);
+  font-size: 0.92rem;
+  letter-spacing: 0.04em;
+  color: var(--cream);
+}
+
+/* Closing note: larger */
+.closing__note {
+  font-size: clamp(1.1rem, 2.2vw, 1.35rem);
+  line-height: 1.7;
+}
