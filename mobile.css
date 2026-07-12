@@ -15,12 +15,24 @@
 .bg-animate,
 .bg-scrim { display: none !important; }
 
+/* Each screen fades to shadow at its top & bottom edges, so where two sections
+   meet the images blend into darkness instead of showing a hard seam. */
 .intro,
 .hero,
 .section {
   background:
-    linear-gradient(rgba(4, 20, 14, 0.42), rgba(4, 20, 14, 0.56)),
-    url("assets/forest-bg-mobile.jpg?v=33") center center / cover no-repeat;
+    linear-gradient(180deg,
+      rgba(4, 20, 14, 0.86) 0%,
+      rgba(4, 20, 14, 0.40) 20%,
+      rgba(4, 20, 14, 0.40) 80%,
+      rgba(4, 20, 14, 0.86) 100%),
+    url("assets/forest-bg-mobile.jpg?v=34") center center / cover no-repeat;
+}
+/* footer shows the forest floor so "Sivakasi" sits on the image, not black */
+.footer {
+  background:
+    linear-gradient(rgba(4, 20, 14, 0.58), rgba(4, 20, 14, 0.74)),
+    url("assets/forest-bg-mobile.jpg?v=34") center bottom / cover no-repeat;
 }
 
 /* fireflies + hearts as a full-page ambient layer that scrolls with content */
