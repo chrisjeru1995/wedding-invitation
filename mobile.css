@@ -30,13 +30,61 @@
     url("assets/forest-bg-mobile.jpg") center center / cover no-repeat;
 }
 
-/* fireflies + hearts must not be fixed either, or they'd jitter the same way */
-#firefly-canvas,
+/* mobile uses CSS fireflies/hearts (below), not the canvas */
+#firefly-canvas { display: none !important; }
+
+/* hearts host spans the whole page (height set by JS), scrolls with content.
+   Raised above the now-opaque section backgrounds so the ambience shows. */
 .hearts {
   position: absolute;
   top: 0;
   left: 0;
+  width: 100%;
+  overflow: visible;
+  z-index: 5;
 }
+
+/* CSS fireflies scattered across every screen */
+.ff-dot {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(248, 230, 160, 0.95), rgba(248, 230, 160, 0) 70%);
+  pointer-events: none;
+  opacity: 0.15;
+  animation-name: ffTwinkle;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+@keyframes ffTwinkle {
+  0%, 100% { opacity: 0.12; transform: translate(0, 0) scale(0.9); }
+  50%      { opacity: 0.9;  transform: translate(5px, -7px) scale(1.2); }
+}
+
+/* CSS hearts gently bobbing across every screen */
+.heart-bob {
+  position: absolute;
+  bottom: auto;
+  color: rgba(248, 214, 190, 0.6);
+  text-shadow: 0 0 12px rgba(248, 230, 173, 0.5);
+  pointer-events: none;
+  animation-name: heartBob;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+@keyframes heartBob {
+  0%, 100% { transform: translateY(0); opacity: 0.3; }
+  50%      { transform: translateY(-14px); opacity: 0.72; }
+}
+
+/* Per-screen background alignment: progress down the forest as you scroll,
+   so the scene feels continuous instead of resetting on each panel. */
+.intro    { background-position: center 18%; }
+.hero     { background-position: center 10%; }
+.invite   { background-position: center 30%; }
+.countdown{ background-position: center 46%; }
+.timeline { background-position: center 60%; }
+.venue    { background-position: center 76%; }
+.closing  { background-position: center 94%; }
 
 /* remove backdrop blur on mobile (perf) — panels keep their green tint */
 .intro__card,
