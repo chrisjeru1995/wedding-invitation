@@ -9,8 +9,8 @@
 /* ---------- Background: steady (no drift = no shake) ---------- */
 .bg-animate {
   animation: none;
-  /* release the base inset:0 so the height below actually applies and the
-     address bar hiding/showing can't resize (and shake) the background */
+  /* release the base inset:0 so the height below applies and the address bar
+     hiding/showing can't resize the background */
   top: 0;
   left: 0;
   right: auto;
@@ -18,9 +18,27 @@
   width: 100%;
   height: 100vh;   /* fallback */
   height: 100lvh;  /* largest viewport height, stable while scrolling */
-  transform: none;
-  will-change: auto;
+  /* promote to its own GPU layer so it is composited (painted once) instead of
+     repainted every scroll frame — this removes the jitter/shake */
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  will-change: transform;
+  backface-visibility: hidden;
   background-image: url("assets/forest-bg-mobile.jpg");
+}
+/* keep the scrim on its own composited layer + a stable height too */
+.bg-scrim {
+  bottom: auto;
+  height: 100vh;
+  height: 100lvh;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+}
+/* fireflies canvas: stable height so it doesn't reflow with the address bar */
+#firefly-canvas {
+  bottom: auto;
+  height: 100vh;
+  height: 100lvh;
 }
 
 /* ---------- Section shell: full screen, centred, tidy spacing ---------- */
