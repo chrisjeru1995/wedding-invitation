@@ -7,37 +7,15 @@
    ========================================================================== */
 
 /* ---------- Background: steady (no drift = no shake) ---------- */
-/* Plain, static, NON-promoted fixed background. No transform / will-change /
-   translateZ — a promoted fixed layer is what jitters on mobile GPUs (and makes
-   the intro card over it look like it shakes too). */
+/* Mobile background = portrait forest image, kept STATIC (no zoom drift).
+   The continuous scale animation on a large fixed image is what shimmers/shakes
+   on mobile. Everything else — fireflies, hearts, card float, blur — is kept. */
 .bg-animate {
-  position: fixed;
-  inset: 0;
-  width: auto;
-  height: auto;
+  background-image: url("assets/forest-bg-mobile.jpg");
+  animation: none !important;
   transform: none !important;
   -webkit-transform: none !important;
   will-change: auto !important;
-  backface-visibility: visible;
-  animation: none !important;
-  background: #04140e url("assets/forest-bg-mobile.jpg") center center / cover no-repeat;
-}
-.bg-scrim {
-  transform: none !important;
-  will-change: auto !important;
-}
-
-/* The two fixed, always-animating full-screen layers are the other jitter risk
-   on mobile, so keep them off. All the element animations (card float, sprigs,
-   glows, reveals) stay on. */
-#firefly-canvas { display: none !important; }
-.hearts { display: none !important; }
-
-/* backdrop-filter blur shimmers/janks on mobile — disable just the blur
-   (panels keep their green tint). Animations are NOT disabled. */
-* {
-  -webkit-backdrop-filter: none !important;
-  backdrop-filter: none !important;
 }
 
 /* ---------- Section shell: full screen, centred, tidy spacing ---------- */

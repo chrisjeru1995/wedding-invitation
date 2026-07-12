@@ -1289,3 +1289,17 @@ body { max-width: 100%; overflow-x: hidden; }
 .tl-date { font-size: clamp(1.25rem, 2.7vw, 1.6rem); font-weight: 700; }
 .tl-day { font-size: 0.82rem; }
 .tl-time { font-size: 0.98rem; }
+
+/* ===============================
+   Guaranteed mobile background fix (always-loaded stylesheet).
+   Static, non-zooming background to stop the shimmer/shake on phones.
+   =============================== */
+@media (max-width: 640px) {
+  .bg-animate {
+    background-image: url("assets/forest-bg-mobile.jpg");
+    animation: none !important;
+    transform: none !important;
+    -webkit-transform: none !important;
+    will-change: auto !important;
+  }
+}
