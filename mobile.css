@@ -34,11 +34,20 @@
   transform: translateZ(0);
   -webkit-transform: translateZ(0);
 }
-/* Disable the continuously-animating fixed layers on mobile — a full-screen
-   fixed canvas + animated hearts repaint every scroll frame and cause the
-   page to vibrate/shake. Removing them gives smooth, steady scrolling. */
+/* Disable the continuously-animating fixed layers on mobile. */
 #firefly-canvas { display: none !important; }
 .hearts { display: none !important; }
+
+/* ---------- Kill the real shake source on mobile ----------
+   The intro card floats (animation) while sitting over a blurred backdrop;
+   backdrop-filter re-samples every frame and makes the card + background
+   appear to vibrate. Disabling continuous animations and backdrop blur on
+   mobile makes everything rock-steady. */
+* {
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+  animation: none !important;
+}
 
 /* ---------- Section shell: full screen, centred, tidy spacing ---------- */
 .section {
