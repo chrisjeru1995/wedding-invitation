@@ -184,7 +184,16 @@
   }
 
   /* --- Mobile: CSS fireflies + hearts scattered across the whole page --- */
+  function sizeMobileBackground() {
+    const h = docHeight();
+    const bg = document.querySelector(".bg-animate");
+    const scrim = document.querySelector(".bg-scrim");
+    if (bg) bg.style.height = h + "px";
+    if (scrim) scrim.style.height = h + "px";
+  }
+
   function buildMobileAmbient() {
+    sizeMobileBackground();
     if (!heartHost || prefersReduced) return;
     heartHost.innerHTML = "";
     const h = docHeight();

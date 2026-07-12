@@ -13,21 +13,35 @@
    fixed background + scrim entirely and paint the forest as a normal, scrolling
    background on each full-screen panel. The intro is made non-fixed too
    (scrolling is locked while it's shown). No fixed layer = no shake. */
-.bg-animate,
-.bg-scrim { display: none !important; }
-
+/* ONE continuous forest background that scrolls WITH the page.
+   It's position:absolute (NOT fixed → no shake) and as tall as the whole
+   document (height set by JS). Sections stay transparent so it shows through,
+   just like desktop — but it scrolls with the content instead of being pinned. */
+.bg-animate {
+  display: block !important;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-height: 100vh;
+  background: #04140e url("assets/forest-bg-mobile.jpg") center top / cover no-repeat;
+  animation: none !important;
+  transform: none !important;
+  -webkit-transform: none !important;
+  will-change: auto !important;
+}
+.bg-scrim {
+  display: block !important;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-height: 100vh;
+}
+/* intro just gets a dark veil for card contrast; the forest shows from .bg-animate */
 .intro {
   position: absolute;
-  background:
-    linear-gradient(rgba(4, 20, 14, 0.5), rgba(4, 20, 14, 0.78)),
-    url("assets/forest-bg-mobile.jpg") center center / cover no-repeat;
-}
-
-.hero,
-.section {
-  background:
-    linear-gradient(rgba(4, 20, 14, 0.5), rgba(4, 20, 14, 0.66)),
-    url("assets/forest-bg-mobile.jpg") center center / cover no-repeat;
+  background: linear-gradient(rgba(4, 20, 14, 0.45), rgba(4, 20, 14, 0.72));
 }
 
 /* mobile uses CSS fireflies/hearts (below), not the canvas */
