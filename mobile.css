@@ -7,19 +7,38 @@
    ========================================================================== */
 
 /* ---------- Background: steady (no drift = no shake) ---------- */
-/* Mobile background = portrait forest image, kept STATIC (no zoom drift). */
-.bg-animate {
-  background-image: url("assets/forest-bg-mobile.jpg");
-  animation: none !important;
-  transform: none !important;
-  -webkit-transform: none !important;
-  will-change: auto !important;
+/* ---------- THE REAL FIX: no position:fixed on mobile ----------
+   On this device's GPU, fixed-position elements jitter/vibrate on their own
+   (that's why the intro shook with no scrolling). So on mobile we remove the
+   fixed background + scrim entirely and paint the forest as a normal, scrolling
+   background on each full-screen panel. The intro is made non-fixed too
+   (scrolling is locked while it's shown). No fixed layer = no shake. */
+.bg-animate,
+.bg-scrim { display: none !important; }
+
+.intro {
+  position: absolute;
+  background:
+    linear-gradient(rgba(4, 20, 14, 0.5), rgba(4, 20, 14, 0.78)),
+    url("assets/forest-bg-mobile.jpg") center center / cover no-repeat;
 }
 
-/* Remove ONLY the backdrop blur on mobile. The blur re-samples the animating
-   fireflies behind it every frame, which is what shimmers/shakes. Fireflies,
-   hearts, card float and every animation are kept — panels keep their tint. */
-.intro,
+.hero,
+.section {
+  background:
+    linear-gradient(rgba(4, 20, 14, 0.5), rgba(4, 20, 14, 0.66)),
+    url("assets/forest-bg-mobile.jpg") center center / cover no-repeat;
+}
+
+/* fireflies + hearts must not be fixed either, or they'd jitter the same way */
+#firefly-canvas,
+.hearts {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+/* remove backdrop blur on mobile (perf) — panels keep their green tint */
 .intro__card,
 .event-card,
 .timeline__body,
