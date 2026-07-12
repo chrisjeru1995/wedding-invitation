@@ -19,8 +19,8 @@
 .hero,
 .section {
   background:
-    linear-gradient(rgba(4, 20, 14, 0.48), rgba(4, 20, 14, 0.62)),
-    url("assets/forest-bg-mobile.jpg") center center / cover no-repeat;
+    linear-gradient(rgba(4, 20, 14, 0.42), rgba(4, 20, 14, 0.56)),
+    url("assets/forest-bg-mobile.jpg?v=33") center center / cover no-repeat;
 }
 
 /* fireflies + hearts as a full-page ambient layer that scrolls with content */
