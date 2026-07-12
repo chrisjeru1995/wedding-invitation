@@ -7,33 +7,23 @@
    ========================================================================== */
 
 /* ==========================================================================
-   BACKGROUND (mobile) — NON-fixed (the only shake-free option on this device).
-   It scrolls with the page. Everything is position:absolute across the full
-   document (heights set by JS). No fixed layers, no transform/will-change that
-   trigger GPU jitter. One continuous forest image (cover) so there are no seams.
+   BACKGROUND (mobile) — per-section forest, NOT zoomed, NO seams, NO shake.
+   The image aspect (~9:16) nearly matches a phone screen, so each section shows
+   the whole forest scene crisply and naturally framed. It scrolls with the
+   content (no fixed layer). Fireflies/hearts float in front on every screen.
    ========================================================================== */
-.bg-animate {
-  display: block !important;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  min-height: 100vh;
-  background: #04140e url("assets/forest-bg-mobile.jpg") center top / cover no-repeat;
-  transform: none !important;
-  -webkit-transform: none !important;
-  will-change: auto !important;
-  animation: none !important;
+.bg-animate,
+.bg-scrim { display: none !important; }
+
+.intro,
+.hero,
+.section {
+  background:
+    linear-gradient(rgba(4, 20, 14, 0.48), rgba(4, 20, 14, 0.62)),
+    url("assets/forest-bg-mobile.jpg") center center / cover no-repeat;
 }
-.bg-scrim {
-  display: block !important;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  min-height: 100vh;
-  background: linear-gradient(rgba(4, 20, 14, 0.42), rgba(4, 20, 14, 0.55));
-}
+
+/* fireflies + hearts as a full-page ambient layer that scrolls with content */
 #firefly-canvas {
   display: block !important;
   position: absolute;
@@ -41,7 +31,8 @@
   left: 0;
   width: 100%;
   min-height: 100vh;
-  z-index: 2;
+  z-index: 6;
+  pointer-events: none;
 }
 .hearts {
   position: absolute;
@@ -50,7 +41,8 @@
   width: 100%;
   min-height: 100vh;
   overflow: hidden;
-  z-index: 1;
+  z-index: 6;
+  pointer-events: none;
 }
 .hearts .heart-bob {
   position: absolute;
