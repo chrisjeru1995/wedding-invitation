@@ -7,46 +7,37 @@
    ========================================================================== */
 
 /* ---------- Background: steady (no drift = no shake) ---------- */
+/* Plain, static, NON-promoted fixed background. No transform / will-change /
+   translateZ — a promoted fixed layer is what jitters on mobile GPUs (and makes
+   the intro card over it look like it shakes too). */
 .bg-animate {
-  animation: none;
-  /* release the base inset:0 so the height below applies and the address bar
-     hiding/showing can't resize the background */
-  top: 0;
-  left: 0;
-  right: auto;
-  bottom: auto;
-  width: 100%;
-  height: 100vh;   /* fallback */
-  height: 100lvh;  /* largest viewport height, stable while scrolling */
-  /* promote to its own GPU layer so it is composited (painted once) instead of
-     repainted every scroll frame — this removes the jitter/shake */
-  transform: translateZ(0);
-  -webkit-transform: translateZ(0);
-  will-change: transform;
-  backface-visibility: hidden;
-  background-image: url("assets/forest-bg-mobile.jpg");
+  position: fixed;
+  inset: 0;
+  width: auto;
+  height: auto;
+  transform: none !important;
+  -webkit-transform: none !important;
+  will-change: auto !important;
+  backface-visibility: visible;
+  animation: none !important;
+  background: #04140e url("assets/forest-bg-mobile.jpg") center center / cover no-repeat;
 }
-/* keep the scrim on its own composited layer + a stable height too */
 .bg-scrim {
-  bottom: auto;
-  height: 100vh;
-  height: 100lvh;
-  transform: translateZ(0);
-  -webkit-transform: translateZ(0);
+  transform: none !important;
+  will-change: auto !important;
 }
-/* Disable the continuously-animating fixed layers on mobile. */
+
+/* The two fixed, always-animating full-screen layers are the other jitter risk
+   on mobile, so keep them off. All the element animations (card float, sprigs,
+   glows, reveals) stay on. */
 #firefly-canvas { display: none !important; }
 .hearts { display: none !important; }
 
-/* ---------- Kill the real shake source on mobile ----------
-   The intro card floats (animation) while sitting over a blurred backdrop;
-   backdrop-filter re-samples every frame and makes the card + background
-   appear to vibrate. Disabling continuous animations and backdrop blur on
-   mobile makes everything rock-steady. */
+/* backdrop-filter blur shimmers/janks on mobile — disable just the blur
+   (panels keep their green tint). Animations are NOT disabled. */
 * {
   -webkit-backdrop-filter: none !important;
   backdrop-filter: none !important;
-  animation: none !important;
 }
 
 /* ---------- Section shell: full screen, centred, tidy spacing ---------- */
