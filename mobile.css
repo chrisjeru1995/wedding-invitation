@@ -7,15 +7,28 @@
    ========================================================================== */
 
 /* ---------- Background: steady (no drift = no shake) ---------- */
-/* Mobile background = portrait forest image, kept STATIC (no zoom drift).
-   The continuous scale animation on a large fixed image is what shimmers/shakes
-   on mobile. Everything else — fireflies, hearts, card float, blur — is kept. */
+/* Mobile background = portrait forest image, kept STATIC (no zoom drift). */
 .bg-animate {
   background-image: url("assets/forest-bg-mobile.jpg");
   animation: none !important;
   transform: none !important;
   -webkit-transform: none !important;
   will-change: auto !important;
+}
+
+/* Remove ONLY the backdrop blur on mobile. The blur re-samples the animating
+   fireflies behind it every frame, which is what shimmers/shakes. Fireflies,
+   hearts, card float and every animation are kept — panels keep their tint. */
+.intro,
+.intro__card,
+.event-card,
+.timeline__body,
+.cd-unit,
+.venue .section__inner,
+.invite .section__inner,
+.magic-btn {
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
 }
 
 /* ---------- Section shell: full screen, centred, tidy spacing ---------- */
