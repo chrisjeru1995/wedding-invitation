@@ -34,12 +34,11 @@
   transform: translateZ(0);
   -webkit-transform: translateZ(0);
 }
-/* fireflies canvas: stable height so it doesn't reflow with the address bar */
-#firefly-canvas {
-  bottom: auto;
-  height: 100vh;
-  height: 100lvh;
-}
+/* Disable the continuously-animating fixed layers on mobile — a full-screen
+   fixed canvas + animated hearts repaint every scroll frame and cause the
+   page to vibrate/shake. Removing them gives smooth, steady scrolling. */
+#firefly-canvas { display: none !important; }
+.hearts { display: none !important; }
 
 /* ---------- Section shell: full screen, centred, tidy spacing ---------- */
 .section {
