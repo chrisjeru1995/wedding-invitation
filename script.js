@@ -103,12 +103,12 @@
     revealEls.forEach((el) => el.classList.add("is-visible"));
   }
 
-  /* ---------- 3. Ambient fireflies + hearts ----------
-     Desktop: canvas fireflies over the fixed viewport (works fine there).
-     Mobile: fixed layers jitter on some GPUs, so instead we scatter lightweight
-     CSS fireflies + hearts across the WHOLE page so they appear on every screen
-     and simply scroll with the content — no fixed layer, no shake. */
+  /* ---------- 3. Ambient fireflies + hearts (rich, on every screen) ----------
+     One canvas of glowing fireflies + drifting hearts. On mobile both span the
+     whole document and scroll with the content (position:absolute, no fixed
+     layer). On desktop they cover the fixed viewport. */
   const heartHost = document.getElementById("hearts");
+  const mobile = window.matchMedia("(max-width: 640px)").matches;
 
   function docHeight() {
     return Math.max(
@@ -117,75 +117,95 @@
       window.innerHeight
     );
   }
-  function isMobile() {
-    return window.matchMedia("(max-width: 640px)").matches;
-  }
 
-  /* --- Desktop canvas fireflies --- */
   const ffCanvas = document.getElementById("firefly-canvas");
   const ffCtx = ffCanvas ? ffCanvas.getContext("2d") : null;
   let fireflies = [];
   let ffRunning = false;
+  let cw = 0, ch = 0;
 
-  function sizeCanvas(canvas) {
+  function sizeCanvas() {
+    if (!ffCanvas || !ffCtx) return;
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    canvas.width = window.innerWidth * dpr;
-    canvas.height = window.innerHeight * dpr;
-    canvas.getContext("2d").setTransform(dpr, 0, 0, dpr, 0, 0);
+    cw = window.innerWidth;
+    ch = mobile ? docHeight() : window.innerHeight;
+    ffCanvas.style.width = cw + "px";
+    ffCanvas.style.height = ch + "px";
+    ffCanvas.width = cw * dpr;
+    ffCanvas.height = ch * dpr;
+    ffCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
   }
-  function makeFirefly(w, h) {
+  function makeFirefly() {
     return {
-      x: Math.random() * w, y: Math.random() * h, r: 1 + Math.random() * 2,
-      baseAlpha: 0.2 + Math.random() * 0.5, phase: Math.random() * Math.PI * 2,
-      speed: 0.004 + Math.random() * 0.01,
-      vx: (Math.random() - 0.5) * 0.25, vy: (Math.random() - 0.5) * 0.25,
+      x: Math.random() * cw, y: Math.random() * ch,
+      r: 1 + Math.random() * 2.2, baseAlpha: 0.28 + Math.random() * 0.55,
+      phase: Math.random() * Math.PI * 2, speed: 0.004 + Math.random() * 0.012,
+      vx: (Math.random() - 0.5) * 0.4, vy: (Math.random() - 0.5) * 0.4,
     };
   }
   function initFireflies() {
     if (!ffCanvas || prefersReduced) return;
-    sizeCanvas(ffCanvas);
+    sizeCanvas();
     fireflies = [];
-    const count = window.innerWidth < 640 ? 28 : 44;
-    for (let i = 0; i < count; i++) fireflies.push(makeFirefly(window.innerWidth, window.innerHeight));
+    const screens = mobile ? Math.max(1, Math.round(ch / window.innerHeight)) : 1;
+    const count = (mobile ? 22 : 55) * screens;
+    for (let i = 0; i < count; i++) fireflies.push(makeFirefly());
     if (!ffRunning) { ffRunning = true; requestAnimationFrame(drawFireflies); }
   }
   function drawFireflies() {
     if (!ffCtx) return;
-    const w = window.innerWidth, h = window.innerHeight;
-    ffCtx.clearRect(0, 0, w, h);
+    ffCtx.clearRect(0, 0, cw, ch);
     for (const f of fireflies) {
       f.phase += f.speed * 16; f.x += f.vx; f.y += f.vy;
-      if (f.x < -10) f.x = w + 10; if (f.x > w + 10) f.x = -10;
-      if (f.y < -10) f.y = h + 10; if (f.y > h + 10) f.y = -10;
+      if (f.x < -12) f.x = cw + 12; if (f.x > cw + 12) f.x = -12;
+      if (f.y < -12) f.y = ch + 12; if (f.y > ch + 12) f.y = -12;
       const alpha = f.baseAlpha * (0.5 + 0.5 * Math.sin(f.phase));
-      const grd = ffCtx.createRadialGradient(f.x, f.y, 0, f.x, f.y, f.r * 4);
-      grd.addColorStop(0, "rgba(248, 230, 160, " + alpha + ")");
-      grd.addColorStop(1, "rgba(248, 230, 160, 0)");
+      const rad = f.r * 4.5;
+      const grd = ffCtx.createRadialGradient(f.x, f.y, 0, f.x, f.y, rad);
+      grd.addColorStop(0, "rgba(248, 232, 170, " + alpha + ")");
+      grd.addColorStop(1, "rgba(248, 232, 170, 0)");
       ffCtx.fillStyle = grd; ffCtx.beginPath();
-      ffCtx.arc(f.x, f.y, f.r * 4, 0, Math.PI * 2); ffCtx.fill();
+      ffCtx.arc(f.x, f.y, rad, 0, Math.PI * 2); ffCtx.fill();
     }
     requestAnimationFrame(drawFireflies);
   }
 
   const GLYPHS = ["❤", "❥", "♡", "❦"];
-
-  /* --- Desktop hearts (gentle rising) --- */
-  function buildDesktopHearts() {
+  function buildHearts() {
     if (!heartHost || prefersReduced) return;
-    for (let i = 0; i < 18; i++) {
-      const h = document.createElement("span");
-      h.textContent = GLYPHS[(Math.random() * GLYPHS.length) | 0];
-      h.style.left = Math.random() * 100 + "vw";
-      h.style.fontSize = 10 + Math.random() * 20 + "px";
-      h.style.animationDuration = 12 + Math.random() * 16 + "s";
-      h.style.animationDelay = -(Math.random() * 20) + "s";
-      h.style.opacity = String(0.35 + Math.random() * 0.45);
-      heartHost.appendChild(h);
+    heartHost.innerHTML = "";
+    if (mobile) {
+      const h = docHeight();
+      heartHost.style.height = h + "px";
+      const screens = Math.max(1, Math.round(h / window.innerHeight));
+      const count = 7 * screens;
+      for (let i = 0; i < count; i++) {
+        const sp = document.createElement("span");
+        sp.className = "heart-bob";
+        sp.textContent = GLYPHS[(Math.random() * GLYPHS.length) | 0];
+        sp.style.left = Math.random() * 100 + "%";
+        sp.style.top = Math.random() * 100 + "%";
+        sp.style.fontSize = 12 + Math.random() * 18 + "px";
+        sp.style.animationDuration = 5 + Math.random() * 6 + "s";
+        sp.style.animationDelay = -Math.random() * 8 + "s";
+        heartHost.appendChild(sp);
+      }
+    } else {
+      for (let i = 0; i < 20; i++) {
+        const sp = document.createElement("span");
+        sp.textContent = GLYPHS[(Math.random() * GLYPHS.length) | 0];
+        sp.style.left = Math.random() * 100 + "vw";
+        sp.style.fontSize = 10 + Math.random() * 20 + "px";
+        sp.style.animationDuration = 12 + Math.random() * 16 + "s";
+        sp.style.animationDelay = -(Math.random() * 20) + "s";
+        sp.style.opacity = String(0.35 + Math.random() * 0.45);
+        heartHost.appendChild(sp);
+      }
     }
   }
 
-  /* --- Mobile: CSS fireflies + hearts scattered across the whole page --- */
   function sizeMobileBackground() {
+    if (!mobile) return;
     const h = docHeight();
     const bg = document.querySelector(".bg-animate");
     const scrim = document.querySelector(".bg-scrim");
@@ -193,51 +213,21 @@
     if (scrim) scrim.style.height = h + "px";
   }
 
-  function buildMobileAmbient() {
+  function initAmbient() {
     sizeMobileBackground();
-    if (!heartHost || prefersReduced) return;
-    heartHost.innerHTML = "";
-    const h = docHeight();
-    heartHost.style.height = h + "px";
-    const screens = Math.max(1, Math.round(h / window.innerHeight));
-
-    const ffCount = 12 * screens;
-    for (let i = 0; i < ffCount; i++) {
-      const d = document.createElement("span");
-      d.className = "ff-dot";
-      d.style.left = Math.random() * 100 + "%";
-      d.style.top = Math.random() * 100 + "%";
-      const s = 4 + Math.random() * 5;
-      d.style.width = s + "px";
-      d.style.height = s + "px";
-      d.style.animationDuration = 3 + Math.random() * 4 + "s";
-      d.style.animationDelay = -Math.random() * 5 + "s";
-      heartHost.appendChild(d);
-    }
-
-    const hCount = 5 * screens;
-    for (let i = 0; i < hCount; i++) {
-      const sp = document.createElement("span");
-      sp.className = "heart-bob";
-      sp.textContent = GLYPHS[(Math.random() * GLYPHS.length) | 0];
-      sp.style.left = Math.random() * 100 + "%";
-      sp.style.top = Math.random() * 100 + "%";
-      sp.style.fontSize = 12 + Math.random() * 16 + "px";
-      sp.style.animationDuration = 5 + Math.random() * 5 + "s";
-      sp.style.animationDelay = -Math.random() * 6 + "s";
-      heartHost.appendChild(sp);
-    }
+    initFireflies();
+    buildHearts();
   }
-
-  // Fixed, GPU-composited canvas + hearts work on every screen for both
-  // desktop and mobile now, so use the same ambient everywhere.
-  initFireflies();
-  buildDesktopHearts();
+  initAmbient();
+  if (mobile) {
+    window.addEventListener("load", initAmbient);
+    setTimeout(initAmbient, 900);
+  }
 
   /* ---------- 4. Resize handling ---------- */
   let resizeTimer;
   window.addEventListener("resize", () => {
     clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(initFireflies, 250);
+    resizeTimer = setTimeout(initAmbient, 250);
   });
 })();

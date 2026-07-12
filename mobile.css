@@ -7,58 +7,69 @@
    ========================================================================== */
 
 /* ==========================================================================
-   BACKGROUND (mobile) — the reliable recipe:
-     • position: fixed div  → GPU keeps DOM elements pinned effortlessly
-     • height: 100svh       → locked to the SMALL viewport, so it never resizes
-                              when the address bar shows/hides (no jump)
-     • translateZ(0)        → forces GPU compositing = 60fps smooth, no shake
-   Sections stay transparent so this shows through (exactly like desktop), and
-   because it's fixed it naturally covers EVERY screen. NO background-attachment.
+   BACKGROUND (mobile) — scrolls WITH the content (position:absolute, NOT fixed,
+   so no jitter), spanning the whole document (height set by JS). Sections are
+   transparent over it — the "fixed layout" look — but it moves as you scroll.
+   The forest is tiled at full width so it stays crisp instead of over-zoomed.
    ========================================================================== */
 .bg-animate {
   display: block !important;
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
-  height: 100svh;
-  background: #04140e url("assets/forest-bg-mobile.jpg") center center / cover no-repeat;
-  transform: translateZ(0);
-  -webkit-transform: translateZ(0);
-  will-change: transform;
+  min-height: 100vh;
+  background: #04140e url("assets/forest-bg-mobile.jpg") top center / 100% auto repeat-y;
+  transform: none !important;
+  -webkit-transform: none !important;
+  will-change: auto !important;
   animation: none !important;
 }
 .bg-scrim {
   display: block !important;
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
-  height: 100svh;
-  transform: translateZ(0);
-  -webkit-transform: translateZ(0);
+  min-height: 100vh;
+  background: linear-gradient(rgba(4, 20, 14, 0.4), rgba(4, 20, 14, 0.5));
 }
-/* fireflies canvas + hearts: fixed + GPU-composited, so the animation shows on
-   every screen without shaking */
+
+/* fireflies canvas spans the whole page and scrolls with it → on every screen */
 #firefly-canvas {
   display: block !important;
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
-  height: 100svh;
-  transform: translateZ(0);
-  -webkit-transform: translateZ(0);
+  min-height: 100vh;
+  z-index: 2;
 }
+
+/* hearts host spans the whole page (height set by JS) */
 .hearts {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
-  height: 100svh;
+  min-height: 100vh;
   overflow: hidden;
-  transform: translateZ(0);
-  -webkit-transform: translateZ(0);
+  z-index: 1;
+}
+.hearts .heart-bob {
+  position: absolute;
+  bottom: auto;
+  color: rgba(248, 214, 190, 0.8);
+  text-shadow: 0 0 14px rgba(248, 230, 173, 0.7);
+  pointer-events: none;
+  animation-name: heartFly;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+@keyframes heartFly {
+  0%   { transform: translateY(8px) rotate(-5deg); opacity: 0.18; }
+  50%  { transform: translateY(-12px) rotate(5deg); opacity: 0.8; }
+  100% { transform: translateY(8px) rotate(-5deg); opacity: 0.18; }
 }
 
 /* remove backdrop blur on mobile (perf) — panels keep their green tint */
