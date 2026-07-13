@@ -136,77 +136,99 @@
 .hero__eyebrow { font-size: clamp(0.9rem, 4.4vw, 1.1rem); letter-spacing: 0.24em; margin: 0; }
 .hero__lead { font-size: clamp(1.15rem, 5.2vw, 1.5rem); }
 .hero__names { margin: 0; }
-.hero__names .name { font-size: clamp(3.2rem, 17vw, 5rem); }
-.hero__names .amp { font-size: clamp(2rem, 9vw, 2.8rem); }
+.hero__names .name { white-space: nowrap; font-size: min(11.5vw, 3.6rem); }
+.hero__names .amp { font-size: clamp(1.8rem, 8vw, 2.4rem); }
 .hero__request { font-size: clamp(1.05rem, 4.8vw, 1.3rem); }
 .hero__date { font-size: clamp(0.92rem, 4.4vw, 1.15rem); letter-spacing: 0.14em; }
 .hero__divider { width: min(240px, 70vw); margin: 0 auto; }
 
-/* ---------- INVITATION (page 3): bigger type, content spread to fill ------ */
-.invite .section__inner { flex: 1; justify-content: space-evenly; }
-.invite__leaf { font-size: 2rem; margin: 0; }
-.invite__text { font-size: clamp(1.15rem, 5vw, 1.45rem); line-height: 1.85; max-width: 94%; }
-.invite__couple { gap: 10px; margin: 0; }
-.invite__name { white-space: nowrap; font-size: min(8.4vw, 2.8rem); }
-.invite__deg { font-size: 0.8rem; letter-spacing: 0.22em; }
-.invite__amp { font-size: 1.25rem; }
+/* ---------- INVITATION (page 3): content enclosed in a card-shaded panel --- */
+.invite .section__inner {
+  flex: none;
+  justify-content: center;
+  gap: 14px;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(248, 230, 173, 0.12), transparent 60%),
+    rgba(6, 35, 26, 0.55);
+  border: 1px solid rgba(230, 197, 118, 0.3);
+  border-radius: 26px;
+  padding: 30px 24px 34px;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.45);
+}
+.invite__leaf { font-size: 1.6rem; margin: 0; }
+.invite__text { font-size: clamp(1.05rem, 4.6vw, 1.28rem); line-height: 1.8; max-width: 100%; }
+.invite__couple { gap: 10px; margin: 4px 0 0; }
+.invite__name { white-space: nowrap; font-size: min(8vw, 2.6rem); }
+.invite__deg { font-size: 0.78rem; letter-spacing: 0.22em; }
+.invite__amp { font-size: 1.2rem; }
 
-/* ---------- COUNTDOWN (page 4): circular timers in a 2x2 ---------- */
+/* ---------- COUNTDOWN (page 4): heart-shaped timers, vertical + centered --- */
 .countdown__grid {
-  grid-template-columns: repeat(2, 1fr);
-  gap: clamp(16px, 5vw, 24px);
-  width: 100%;
-  max-width: 300px;
-  margin-top: 28px;
+  grid-template-columns: 1fr;
+  justify-items: center;
+  gap: 12px;
+  width: auto;
+  max-width: none;
+  margin: 22px auto 0;
 }
 .cd-unit {
+  width: clamp(116px, 36vw, 150px);
   aspect-ratio: 1 / 1;
-  border-radius: 50%;
+  border: none;
+  border-radius: 0;
+  background: rgba(6, 35, 26, 0.6);
+  -webkit-clip-path: url(#heart-clip);
+  clip-path: url(#heart-clip);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 2px;
-  padding: 0;
-  border: 2px solid rgba(230, 197, 118, 0.55);
-  background: rgba(6, 35, 26, 0.5);
-  box-shadow: 0 0 22px rgba(0, 0, 0, 0.35), inset 0 0 18px rgba(248, 230, 173, 0.08);
+  padding: 10% 6% 24%;
+  box-shadow: none;
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.4));
 }
-.cd-num { font-size: clamp(2rem, 10vw, 2.6rem); line-height: 1; }
-.cd-label { margin-top: 4px; font-size: 0.62rem; }
+.cd-num { font-size: clamp(1.7rem, 8vw, 2.1rem); line-height: 1; }
+.cd-label { margin-top: 2px; font-size: 0.6rem; }
 
 /* ---------- TIMELINE / Moments to Treasure (page 5): tight stacked cards -- */
 .timeline__list { width: 100%; max-width: 420px; gap: 16px; margin-top: 24px; }
 .timeline__body { padding: 22px 20px; }
 .timeline__tag { font-size: clamp(1.6rem, 7vw, 2.1rem); }
 .timeline__title { font-size: clamp(1rem, 4.2vw, 1.25rem); }
-.tl-date { font-size: clamp(1.2rem, 5.4vw, 1.55rem); }
+.tl-date { font-size: clamp(1.4rem, 6.2vw, 1.8rem); }
 
-/* ---------- VENUE ("Where the Magic Happens"): tidy card ---------- */
-.venue .section__inner {
-  background: rgba(6, 35, 26, 0.55);
-  border: 1px solid rgba(230, 197, 118, 0.32);
-  border-radius: 22px;
-  padding: 26px 20px 30px;
-  backdrop-filter: blur(4px);
-  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.45);
-  gap: 12px;
-}
+/* ---------- VENUE ("Where the Magic Happens") ---------- */
+/* Only the name + address sit in a rectangle box (like desktop); the rest of
+   the section is not enclosed. */
 .venue .section__title { font-size: clamp(1.7rem, 7.2vw, 2.2rem); }
-.venue__name { font-size: clamp(1.35rem, 6vw, 1.7rem); margin-top: 8px; color: var(--gold-bright); }
+.venue__card {
+  display: inline-block;
+  margin-top: 14px;
+  padding: 18px 24px;
+  border: 1px solid rgba(230, 197, 118, 0.42);
+  border-radius: 14px;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(248, 230, 173, 0.12), transparent 60%),
+    rgba(6, 35, 26, 0.6);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+}
+.venue__card .venue__name { margin-top: 0; }
+.venue__name { font-size: clamp(1.35rem, 6vw, 1.7rem); color: var(--gold-bright); }
 .venue__address { font-size: clamp(0.95rem, 4.2vw, 1.08rem); margin-top: 4px; }
-.venue__map { margin-top: 16px; aspect-ratio: 4 / 3; width: 100%; border-radius: 14px; }
+.venue__map { margin-top: 20px; aspect-ratio: 4 / 3; width: 100%; border-radius: 14px; }
 .btn--map { margin-top: 20px; padding: 15px 30px; font-size: 0.84rem; }
 
-/* ---------- CLOSING (last page): highlighted, larger names ---------- */
+/* ---------- CLOSING (last page): same styling as desktop, mobile sizing ---- */
 .closing__script { font-size: clamp(2rem, 9vw, 3rem); }
 .closing__names {
-  font-family: var(--font-script);
-  font-size: clamp(2.6rem, 13vw, 3.8rem);
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: clamp(2rem, 9vw, 2.8rem);
   line-height: 1.15;
-  color: var(--gold-bright);
+  color: #ffffff;
   margin-top: 12px;
-  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.6), 0 0 34px rgba(248, 230, 173, 0.55);
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.6);
 }
 .closing__note { font-size: clamp(1.3rem, 5.6vw, 1.65rem); margin-top: 16px; max-width: 94%; line-height: 1.65; }
 
