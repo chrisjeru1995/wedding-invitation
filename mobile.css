@@ -162,22 +162,23 @@
 .invite__deg { font-size: 0.78rem; letter-spacing: 0.22em; }
 .invite__amp { font-size: 1.2rem; }
 
-/* ---------- COUNTDOWN (page 4): number INSIDE a small heart, label BELOW it,
-   vertical + centred, sized so all four fit on one screen ---------- */
+/* ---------- COUNTDOWN (page 4): number INSIDE a heart, label BESIDE it,
+   stacked vertically + centred, sized to fit one screen ---------- */
 .countdown__grid {
   grid-template-columns: 1fr;
   justify-items: center;
-  gap: 8px;
+  gap: 12px;
   width: auto;
   max-width: none;
-  margin: 14px auto 0;
+  margin: 16px auto 0;
 }
 .cd-unit {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  gap: 4px;
-  width: auto;
+  justify-content: flex-start;
+  gap: 16px;
+  width: 210px;              /* fixed so the hearts line up in a column */
   aspect-ratio: auto;
   background: none;
   border: none;
@@ -189,8 +190,9 @@
   padding: 0;
 }
 .cd-num {
-  width: clamp(52px, 16vw, 66px);
-  height: clamp(52px, 16vw, 66px);
+  flex: 0 0 auto;
+  width: clamp(66px, 20vw, 84px);
+  height: clamp(66px, 20vw, 84px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -198,11 +200,16 @@
   background: rgba(6, 35, 26, 0.62);
   -webkit-clip-path: url(#heart-clip);
   clip-path: url(#heart-clip);
-  font-size: clamp(1.2rem, 5.2vw, 1.55rem);
+  font-size: clamp(1.4rem, 6vw, 1.8rem);
   line-height: 1;
   filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.4));
 }
-.cd-label { margin-top: 0; font-size: 0.6rem; letter-spacing: 0.14em; }
+.cd-label { margin-top: 0; font-size: 0.82rem; letter-spacing: 0.16em; text-align: left; }
+
+/* ---------- Last page: all three (name / heart / name) on separate lines --- */
+.closing__names { flex-direction: column; gap: 2px; }
+.cn-name { white-space: nowrap; }
+.cn-heart { font-size: 0.7em; }
 
 /* ---------- TIMELINE / Moments to Treasure (page 5): tight stacked cards -- */
 .timeline__list { width: 100%; max-width: 420px; gap: 16px; margin-top: 24px; }
