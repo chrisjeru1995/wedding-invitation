@@ -162,54 +162,53 @@
 .invite__deg { font-size: 0.78rem; letter-spacing: 0.22em; }
 .invite__amp { font-size: 1.2rem; }
 
-/* ---------- COUNTDOWN (page 4): number INSIDE a heart, label BESIDE it,
-   stacked vertically + centred, sized to fit one screen ---------- */
+/* ---------- COUNTDOWN (page 4): number + label sit INSIDE each heart. The
+   hearts are laid out in a 2×2 grid and the section is top-aligned so the whole
+   countdown fits on one screen and the hearts stay the focus (the content is
+   NOT vertically centred in the middle of the page). ---------- */
+.countdown { justify-content: flex-start; padding-top: clamp(40px, 8vh, 72px); }
+
 .countdown__grid {
-  grid-template-columns: 1fr;
+  grid-template-columns: repeat(2, auto);
   justify-items: center;
-  gap: 12px;
+  align-content: start;
+  gap: 14px 18px;
   width: auto;
   max-width: none;
-  margin: 16px auto 0;
+  margin: 20px auto 0;
 }
 .cd-unit {
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 16px;
-  width: 210px;              /* fixed so the hearts line up in a column */
-  aspect-ratio: auto;
-  background: none;
-  border: none;
-  border-radius: 0;
-  -webkit-clip-path: none;
-  clip-path: none;
-  box-shadow: none;
-  filter: none;
-  padding: 0;
-}
-.cd-num {
-  flex: 0 0 auto;
-  width: clamp(66px, 20vw, 84px);
-  height: clamp(66px, 20vw, 84px);
-  display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding-bottom: 12%;
+  gap: 0;
+  width: clamp(112px, 38vw, 150px);
+  height: clamp(112px, 38vw, 150px);
+  aspect-ratio: auto;
   background: rgba(6, 35, 26, 0.62);
+  border: none;
+  border-radius: 0;
   -webkit-clip-path: url(#heart-clip);
   clip-path: url(#heart-clip);
-  font-size: clamp(1.4rem, 6vw, 1.8rem);
-  line-height: 1;
-  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.4));
+  box-shadow: none;
+  filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.4));
+  padding: 8% 8% 24%;
 }
-.cd-label { margin-top: 0; font-size: 0.82rem; letter-spacing: 0.16em; text-align: left; }
+.cd-num { font-size: clamp(1.9rem, 8.5vw, 2.6rem); line-height: 1; }
+.cd-label { margin-top: 2px; font-size: 0.62rem; letter-spacing: 0.08em; }
 
-/* ---------- Last page: all three (name / heart / name) on separate lines --- */
-.closing__names { flex-direction: column; gap: 2px; }
+/* ---------- Last page: name / heart / name on separate lines; the heart sits
+   centred on its own line between the two names ---------- */
+.closing__names {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 2px;
+}
 .cn-name { white-space: nowrap; }
-.cn-heart { font-size: 0.7em; }
+.cn-heart { font-size: 0.7em; align-self: center; }
 
 /* ---------- TIMELINE / Moments to Treasure (page 5): tight stacked cards -- */
 .timeline__list { width: 100%; max-width: 420px; gap: 16px; margin-top: 24px; }
