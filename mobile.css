@@ -162,34 +162,47 @@
 .invite__deg { font-size: 0.78rem; letter-spacing: 0.22em; }
 .invite__amp { font-size: 1.2rem; }
 
-/* ---------- COUNTDOWN (page 4): heart-shaped timers, vertical + centered --- */
+/* ---------- COUNTDOWN (page 4): number INSIDE a small heart, label BELOW it,
+   vertical + centred, sized so all four fit on one screen ---------- */
 .countdown__grid {
   grid-template-columns: 1fr;
   justify-items: center;
-  gap: 12px;
+  gap: 8px;
   width: auto;
   max-width: none;
-  margin: 22px auto 0;
+  margin: 14px auto 0;
 }
 .cd-unit {
-  width: clamp(116px, 36vw, 150px);
-  aspect-ratio: 1 / 1;
-  border: none;
-  border-radius: 0;
-  background: rgba(6, 35, 26, 0.6);
-  -webkit-clip-path: url(#heart-clip);
-  clip-path: url(#heart-clip);
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 2px;
-  padding: 10% 6% 24%;
+  gap: 4px;
+  width: auto;
+  aspect-ratio: auto;
+  background: none;
+  border: none;
+  border-radius: 0;
+  -webkit-clip-path: none;
+  clip-path: none;
   box-shadow: none;
-  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.4));
+  filter: none;
+  padding: 0;
 }
-.cd-num { font-size: clamp(1.7rem, 8vw, 2.1rem); line-height: 1; }
-.cd-label { margin-top: 2px; font-size: 0.6rem; }
+.cd-num {
+  width: clamp(52px, 16vw, 66px);
+  height: clamp(52px, 16vw, 66px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 12%;
+  background: rgba(6, 35, 26, 0.62);
+  -webkit-clip-path: url(#heart-clip);
+  clip-path: url(#heart-clip);
+  font-size: clamp(1.2rem, 5.2vw, 1.55rem);
+  line-height: 1;
+  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.4));
+}
+.cd-label { margin-top: 0; font-size: 0.6rem; letter-spacing: 0.14em; }
 
 /* ---------- TIMELINE / Moments to Treasure (page 5): tight stacked cards -- */
 .timeline__list { width: 100%; max-width: 420px; gap: 16px; margin-top: 24px; }
@@ -204,10 +217,10 @@
 .venue .section__title { font-size: clamp(1.7rem, 7.2vw, 2.2rem); }
 .venue__card {
   display: inline-block;
-  margin-top: 14px;
-  padding: 18px 24px;
+  margin-top: 12px;
+  padding: 12px 18px;
   border: 1px solid rgba(230, 197, 118, 0.42);
-  border-radius: 14px;
+  border-radius: 12px;
   background:
     radial-gradient(ellipse at 50% 0%, rgba(248, 230, 173, 0.12), transparent 60%),
     rgba(6, 35, 26, 0.6);
@@ -230,7 +243,7 @@
   margin-top: 12px;
   text-shadow: 0 2px 20px rgba(0, 0, 0, 0.6);
 }
-.closing__note { font-size: clamp(1.3rem, 5.6vw, 1.65rem); margin-top: 16px; max-width: 94%; line-height: 1.65; }
+.closing__note { font-size: clamp(1rem, 4.3vw, 1.2rem); margin-top: 16px; max-width: 92%; line-height: 1.6; }
 
 /* ---------- Footer ---------- */
 .footer { font-size: 0.68rem; padding: 22px 16px calc(30px + env(safe-area-inset-bottom)); }
